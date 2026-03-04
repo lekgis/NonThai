@@ -163,12 +163,15 @@
         }
 
         /* ✅ สำหรับมือถือ */
+        /* ✅ เพิ่มใน <style> */
         @media (max-width: 768px) {
           #pwa-install-container {
-            bottom: 80px !important;
+            width: 95% !important;  /* ✅ บังคับความกว้างบนมือถือ */
           }
           #pwa-install-btn {
-            max-width: 90%;  /* ✅ ไม่ให้กว้างเกินจอ */
+            width: 100% !important;  /* ✅ ปุ่มเต็ม container */
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
           }
         }
 
