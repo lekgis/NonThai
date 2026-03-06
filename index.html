@@ -7566,6 +7566,10 @@
                 allSigns = newData.signs;
                 
                 console.log('✅ อัปเดตข้อมูลเรียลไทม์สำเร็จ');
+                // ✅ ✅ ✅ เพิ่มส่วนนี้: รีเซ็ตแคชเมื่อข้อมูลใหม่มา ✅ ✅ ✅
+                usedCodesLastUpdate = 0;  // ✅ บังคับให้แคชหมดอายุทันที
+                console.log('🔄 รีเซ็ตแคช usedCodes (ข้อมูลใหม่มาแล้ว)');
+                
             } catch (err) {
                 console.error('❌ ข้อผิดพลาดในการอัปเดต:', err);
             } finally {
