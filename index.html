@@ -1723,6 +1723,35 @@
             }
         }
 
+        /**
+         * ✅ จัดรูปแบบวันที่/เวลา แบบประเทศไทย (UTC+7) + ปี พ.ศ.
+         * @param {Date|string} dateValue - ค่าวันที่ (Date object หรือ ISO string)
+         * @returns {string} รูปแบบ "2569-03-06 17:42:37"
+         */
+        function formatThaiDateTimeBE(dateValue) {
+            try {
+                // แปลง input เป็น Date object
+                const date = dateValue instanceof Date ? dateValue : new Date(dateValue);
+                if (isNaN(date.getTime())) return '';
+                
+                // แปลงเป็นเวลาไทย (UTC+7) โดยใช้ toLocaleString
+                const thaiTime = new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' }));
+                
+                const pad = (n) => String(n).padStart(2, '0');
+                const yearBE = thaiTime.getFullYear() + 543;  // ✅ แปลงเป็น พ.ศ.
+                const month = pad(thaiTime.getMonth() + 1);
+                const day = pad(thaiTime.getDate());
+                const hours = pad(thaiTime.getHours());
+                const minutes = pad(thaiTime.getMinutes());
+                const seconds = pad(thaiTime.getSeconds());
+                
+                return `${yearBE}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+            } catch (e) {
+                console.error('formatThaiDateTimeBE error:', e);
+                return '';
+            }
+        }
+
         function toggleEditMode() {
             isEditMode = !isEditMode;
             const btnEdit = document.getElementById('btn-edit');
@@ -2469,7 +2498,7 @@
             data.land_use = computedLandUse;
             
             // ✅ ✅ ✅ เพิ่มฟิลด์วันที่ (แก้ไขข้อ 2) ✅ ✅ ✅
-            const now = new Date(new Date().getTime() + (7 * 60 * 60 * 1000)).toISOString().replace('Z', '+07:00');
+            const now = formatThaiDateTimeBE(new Date()); 
             if (editingMarker && editingMarker._popupData) {
                 // ✅ กรณีอัปเดต: ใช้ date_added เดิม + update ใหม่
                 data.date_added = editingMarker._popupData.date_added || now;
